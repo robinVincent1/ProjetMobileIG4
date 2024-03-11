@@ -7,17 +7,43 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+class AuthManager: ObservableObject {
+    @Published var isAuthenticated = false
+    private let tokenKey = "AuthToken"
+    
+    var authToken: String? {
+        UserDefaults.standard.string(forKey: tokenKey)
+    }
+    
+    func login(token: String) {
+        UserDefaults.standard.set(token, forKey: tokenKey)
+        isAuthenticated = true
+    }
+    
+    func logout() {
+        UserDefaults.standard.removeObject(forKey: tokenKey)
+        isAuthenticated = false
+        AuthenticationManager.shared.deleteTokenFromKeychain()
     }
 }
+
+struct ContentView: View {
+    @StateObject private var authManager = AuthManager()
+    
+    var body: some View {
+        if authManager.isAuthenticated {
+            // Afficher le contenu protégé de l'application
+            Text("Bienvenue dans votre application")
+                .onTapGesture {
+                    authManager.logout()
+                }
+        } else {
+            // Afficher l'écran de connexion
+            Login(authManager: authManager)
+        }
+    }
+}
+
 
 #Preview {
     ContentView()
