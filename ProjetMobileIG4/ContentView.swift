@@ -40,6 +40,7 @@ struct ContentView: View {
         } else {
             // Afficher l'écran de connexion
             Login(authManager: authManager)
+
         }
     }
 }
