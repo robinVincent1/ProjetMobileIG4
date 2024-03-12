@@ -10,7 +10,7 @@ struct NavBarView: View {
                 Text("Planning general")
             }
             if selected == "house"{
-                Text("Accueil")
+                TestView()
             }
             if selected == "person"{
                 Text("Planning perso")
