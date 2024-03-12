@@ -7,26 +7,6 @@
 
 import SwiftUI
 
-class AuthManager: ObservableObject {
-    @Published var isAuthenticated = false
-    private let tokenKey = "AuthToken"
-    
-    var authToken: String? {
-        UserDefaults.standard.string(forKey: tokenKey)
-    }
-    
-    func login(token: String) {
-        UserDefaults.standard.set(token, forKey: tokenKey)
-        isAuthenticated = true
-    }
-    
-    func logout() {
-        UserDefaults.standard.removeObject(forKey: tokenKey)
-        isAuthenticated = false
-        AuthenticationManager.shared.deleteTokenFromKeychain()
-    }
-}
-
 struct ContentView: View {
     @StateObject private var authManager = AuthManager()
     
@@ -45,7 +25,8 @@ struct ContentView: View {
     }
 }
 
-
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }
