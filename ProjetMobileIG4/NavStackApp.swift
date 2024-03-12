@@ -5,22 +5,9 @@ struct Navigation : View {
     
     var body : some View {
         NavigationStack(path: $path){
-            List{
-                NavigationLink("Test", value: "ABC")
-                Button("Navigate to XYZ"){
-                    path.append("XYZ")
-                }
-            }.navigationDestination(for: String.self){string in
-                VStack{
-                    Text(string)
-                    Button("ABC"){
-                        path.append("WXY")
-                    }
-                    Button("Pop to root"){
-                        path.removeAll()
-                    }
-                }
-            }
+        Zstack{
+        Text("Test 🚘)
+        }
         }
     }
 }
